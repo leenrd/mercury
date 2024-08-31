@@ -27,4 +27,4 @@ if ! head -1 "$1" | grep -qE "^.{1,88}$"; then
     echo "OPTIONS: type can be feat, fix, chore, docs, test, style, refactor, perf, build, ci, revert, enhancement"
     exit 1
 fi
-echo "SUCCESS:✨ Commit message is valid. Good job nigga!! 🚀"
+echo "SUCCESS:✨ Commit message is valid!! 🚀"
