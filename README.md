@@ -8,3 +8,4 @@ Genetic algo implementation app that optimizes investment portfolios by balancin
 - Using genetic algo
 - graphs for stock charts ref: https://crypto-charts-pi.vercel.app/?ticker=BTC/USD
 - graphql
+- local mysql
