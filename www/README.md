@@ -1,14 +1,20 @@
-# Leenard Template
+todo
 
-🦄 This template provides a minimal setup to get started.
+- auth: auth0
+- client: next, tsQuery, Zustand
+- server: fastApi / express
+- gen algo: portfolio optimization
+- local postgres
 
-## Get Started
+pages
 
-Enter the ff. in your terminal:
-
-```
-npm i
-npm run dev
-```
-
----
+- auth
+- tabs:
+  - account: total accounts analytics
+    - net-worth graph
+    - assets graph
+    - liabilities graph
+  - vault: list of assets + management
+  - transactions table
+  - market: stock watch-list
+- settings / profile
