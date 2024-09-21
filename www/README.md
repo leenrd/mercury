@@ -1,13 +1,16 @@
 todo
 
-- auth: auth0?
 - client: next, tsQuery, Zustand
-- server: fastApi / express
-- local postgres
+- server: express for algo & crud
+- graphQl: for api
+- redis: caching in express
+- local postgres + tablePlus
+- implement design patterns: factory/builder/repository
 
 pages
 
 - auth
+- settings / profile
 - tabs:
   - account: total accounts analytics
     - net-worth graph
@@ -15,6 +18,5 @@ pages
     - liabilities graph
   - vault: list of assets + management
   - transactions table
-  - optimize: gen algo
+  - optimize: gen algo / dividends calculation base on target monthly income
   - market: stock watch-list
-- settings / profile

@@ -24,7 +24,7 @@ const Navbar = () => {
   return (
     <nav className="fixed w-full flex items-center justify-between py-2 px-10 border-b text-primary font-base bg-background/20 backdrop-blur-lg">
       <section className="flex gap-3 items-center">
-        <div className="h-5 w-5 bg-primary rounded-tr-lg rounded-bl-lg"></div>
+        <div className="h-5 w-5 bg-primary rounded-full"></div>
         <AnimatedBackground
           defaultValue={TABS[0]}
           className="rounded-md bg-foreground/10"
