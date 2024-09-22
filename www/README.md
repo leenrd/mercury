@@ -1,8 +1,7 @@
 todo
 
 - client: next, tsQuery, Zustand
-- server: express for algo & crud
-- graphQl: for api
+- server: express for algo & cruds
 - redis: caching in express
 - local postgres + tablePlus
 - implement design patterns: factory/builder/repository
