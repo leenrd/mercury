@@ -1,3 +1,5 @@
+"use client";
+
 import AnimatedBackground from "@/components/ui/animated-bg";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,17 +20,52 @@ import {
   User,
 } from "lucide-react";
 import Wrapper from "./wrapper";
+import Image from "next/image";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
-  const TABS = ["Account", "Vault", "Transactions", "Markets"];
+  const path = usePathname();
+  const TABS = [
+    {
+      href: "/",
+      label: "Account",
+    },
+    {
+      href: "/vault",
+      label: "Vault",
+    },
+    {
+      href: "/transactions",
+      label: "Transactions",
+    },
+    {
+      href: "/market",
+      label: "Markets",
+    },
+  ];
+
+  const DROPLINKS = [
+    {
+      href: "/profile",
+      label: "Profile",
+    },
+    {
+      href: "/settings",
+      label: "Settings",
+    },
+  ];
 
   return (
-    <nav className="fixed w-full border-b text-primary font-base bg-background/20 backdrop-blur-lg">
+    <nav className="fixed w-full border-b text-primary font-base bg-background/90 backdrop-blur-lg">
       <Wrapper className="flex items-center justify-between">
         <section className="flex gap-3 items-center">
-          {/* <div className="h-5 w-5 bg-primary rounded-full"></div> */}
+          <div className="flex items-center justify-center">
+            <Image src="/favicon.ico" width={29} height={29} alt="logo" />
+          </div>
           <AnimatedBackground
-            defaultValue={TABS[0]}
+            defaultValue={TABS[0].label}
             className="rounded-md bg-foreground/10"
             transition={{
               type: "tween",
@@ -37,14 +74,19 @@ const Navbar = () => {
             enableHover
           >
             {TABS.map((tab, index) => (
-              <button
-                key={index}
-                data-id={tab}
-                type="button"
-                className="px-2.5 py-1.5 text-primary/90 transition-colors duration-300 hover:text-primary dark:text-zinc-400 dark:hover:text-zinc-50"
-              >
-                {tab}
-              </button>
+              <Link href={tab.href} key={index} data-id={tab} scroll={false}>
+                <button
+                  type="button"
+                  className={cn(
+                    "px-2.5 py-1.5 text-primary/90 transition-colors duration-300 hover:text-primary dark:text-zinc-400 dark:hover:text-zinc-50",
+                    {
+                      "text-primary font-medium": path === tab.href,
+                    }
+                  )}
+                >
+                  {tab.label}
+                </button>
+              </Link>
             ))}
           </AnimatedBackground>
         </section>
@@ -60,20 +102,28 @@ const Navbar = () => {
                 />
               </Button>
             </DropdownMenuTrigger>
+
             <DropdownMenuContent className="w-56" align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
+
               <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Profile</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Settings</span>
-                </DropdownMenuItem>
+                <Link href={DROPLINKS[0].href} scroll={false}>
+                  <DropdownMenuItem>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </DropdownMenuItem>
+                </Link>
+                <Link href={DROPLINKS[1].href} scroll={false}>
+                  <DropdownMenuItem>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </DropdownMenuItem>
+                </Link>
               </DropdownMenuGroup>
+
               <DropdownMenuSeparator />
+
               <DropdownMenuItem>
                 <Github className="mr-2 h-4 w-4" />
                 <span>GitHub</span>
