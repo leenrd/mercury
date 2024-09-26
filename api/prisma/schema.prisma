@@ -12,3 +12,50 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Asset {
+  id            String   @id @default(cuid())
+  label         String
+  type          String
+  quantity      Float
+  purchasePrice Int
+  purchaseDate  DateTime @default(now())
+  createdAt     DateTime @default(now())
+}
+
+model Liability {
+  id            String   @id @default(cuid())
+  label         String
+  type          String
+  quantity      Float
+  purchasePrice Int
+  purchaseDate  DateTime @default(now())
+  createdAt     DateTime @default(now())
+}
+
+model Transaction {
+  id        String   @id @default(cuid())
+  merchant  String
+  amount    Float
+  category  String
+  account   String
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+}
+
+model Account {
+  id        String   @id @default(cuid())
+  label     String
+  type      String
+  provider  String
+  value     Float
+  createdAt DateTime @default(now())
+}
