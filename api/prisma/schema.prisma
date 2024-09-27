@@ -20,7 +20,7 @@ model User {
   watchlist Watchlist[]
   portfolio Portfolio[]
   createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  updatedAt DateTime    @default(now()) @updatedAt
 }
 
 model Asset {
