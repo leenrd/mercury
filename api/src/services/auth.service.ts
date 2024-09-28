@@ -1,7 +1,5 @@
 import { accessToken, comparePassword, hashPassword } from "@/lib/auth.utils";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 class User {
   constructor(public username: string, public password: string) {}

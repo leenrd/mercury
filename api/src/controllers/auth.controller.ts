@@ -25,7 +25,7 @@ export default class AuthController implements _auth {
 
       res
         .status(HTTP_STATUS.CREATED)
-        .json({ message: "User created successfully", new_user });
+        .json({ message: "User created successfully" });
     } catch (error) {
       console.error("Error creating user: @AuthController/register");
       res.status(500).send(error);

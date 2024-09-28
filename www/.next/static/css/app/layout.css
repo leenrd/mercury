@@ -674,12 +674,6 @@ video {
 .rounded-sm {
   border-radius: calc(var(--radius) - 4px);
 }
-.rounded-xl {
-  border-radius: 0.75rem;
-}
-.rounded-lg {
-  border-radius: var(--radius);
-}
 .border {
   border-width: 1px;
 }
@@ -722,6 +716,10 @@ video {
 .bg-zinc-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(244 244 245 / var(--tw-bg-opacity));
+}
+.bg-zinc-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(250 250 250 / var(--tw-bg-opacity));
 }
 .fill-current {
   fill: currentColor;

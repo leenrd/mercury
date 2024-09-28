@@ -42,7 +42,7 @@ export const bakeCookies = (res: Response, accessToken: string) => {
 declare global {
   namespace Express {
     interface Request {
-      user: string;
+      id: string;
       username: string;
     }
   }
@@ -63,7 +63,7 @@ export const verifyAccessToken = (
           .json({ message: "Invalid Token" });
       }
 
-      req.user = decoded.user.id;
+      req.id = decoded.user.id;
       req.username = decoded.user.username;
     }
   );
