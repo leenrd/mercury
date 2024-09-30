@@ -29,8 +29,12 @@ const Navbar = () => {
   const path = usePathname();
   const TABS = [
     {
-      href: "/",
-      label: "Account",
+      href: "/market",
+      label: "Markets",
+    },
+    {
+      href: "/overview",
+      label: "Overview",
     },
     {
       href: "/vault",
@@ -39,10 +43,6 @@ const Navbar = () => {
     {
       href: "/transactions",
       label: "Transactions",
-    },
-    {
-      href: "/market",
-      label: "Markets",
     },
   ];
 
@@ -124,10 +124,12 @@ const Navbar = () => {
 
               <DropdownMenuSeparator />
 
-              <DropdownMenuItem>
-                <Github className="mr-2 h-4 w-4" />
-                <span>GitHub</span>
-              </DropdownMenuItem>
+              <Link href={"https://github.com/leenrd/mercury"}>
+                <DropdownMenuItem>
+                  <Github className="mr-2 h-4 w-4" />
+                  <span>GitHub</span>
+                </DropdownMenuItem>
+              </Link>
               <DropdownMenuItem>
                 <LifeBuoy className="mr-2 h-4 w-4" />
                 <span>Support</span>

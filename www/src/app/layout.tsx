@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/partials/navbar";
-import Head from "next/head";
+import QueryClientContextProvider from "@/lib/query";
 
 export const metadata: Metadata = {
   title: "Mercury",
@@ -16,8 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-geist antialiased">
-        <Navbar />
-        {children}
+        <QueryClientContextProvider>{children}</QueryClientContextProvider>
       </body>
     </html>
   );

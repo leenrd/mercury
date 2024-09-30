@@ -1,3 +1,4 @@
+import Footer from "@/components/partials/footer";
 import React from "react";
 
 const AuthLayout = ({
@@ -5,7 +6,12 @@ const AuthLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return <article>{children}</article>;
+  return (
+    <article>
+      {children}
+      <Footer />
+    </article>
+  );
 };
 
 export default AuthLayout;

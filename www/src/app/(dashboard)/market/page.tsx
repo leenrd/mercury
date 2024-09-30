@@ -1,7 +1,7 @@
 import React from "react";
 
 const MarketPage = () => {
-  return <div>MarketPage</div>;
+  return <article>stock prices here</article>;
 };
 
 export default MarketPage;

@@ -1,7 +1,8 @@
+import Wrapper from "@/components/partials/wrapper";
 import React from "react";
 
 const LoginPage = () => {
-  return <div>LoginPage</div>;
+  return <Wrapper body>LoginPage</Wrapper>;
 };
 
 export default LoginPage;
