@@ -1,54 +1,38 @@
-import Wrapper from "@/components/partials/wrapper";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import React from "react";
 import NetWorthGraph from "./_partials/networth-graph";
+import NetWorthStat from "./_partials/networth-stat";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const AccountPage = () => {
   return (
     <article>
       <Card>
-        <CardHeader className="grid grid-cols-2 gap-3">
-          <div className="col-span-1">
-            <CardDescription className="tracking-tight mb-1">
-              Net Worth
-            </CardDescription>
-            <CardTitle>
-              <p className="text-3xl font-medium">₱ 80,000</p>
-            </CardTitle>
-          </div>
-          <div className="col-span-1">
-            <CardDescription className="tracking-tight mb-1">
-              ₱100K net worth projected to be reached
-            </CardDescription>
-            <CardTitle>
-              <p className="text-3xl font-medium">2029</p>
-            </CardTitle>
-          </div>
-        </CardHeader>
-
-        <CardContent>
-          <NetWorthGraph />
-        </CardContent>
+        <NetWorthStat />
+        <NetWorthGraph />
       </Card>
 
       <br />
 
       <Card>
-        <CardHeader>
-          <CardDescription>
-            options: Assets | Liabilities | CashFlow | Funds
-          </CardDescription>
-        </CardHeader>
-
-        <CardContent>
-          <NetWorthGraph />
-        </CardContent>
+        <Tabs defaultValue="tab1">
+          <CardHeader>
+            <TabsList>
+              <TabsTrigger value="tab1">Assets</TabsTrigger>
+              <TabsTrigger value="tab2">Liabilities</TabsTrigger>
+              <TabsTrigger value="tab3">CashFlow</TabsTrigger>
+              <TabsTrigger value="tab4">Funds</TabsTrigger>
+            </TabsList>
+          </CardHeader>
+          <div>
+            <CardContent>
+              <TabsContent value="tab1">Assets</TabsContent>
+              <TabsContent value="tab2">Liabilities</TabsContent>
+              <TabsContent value="tab3">CashFlow</TabsContent>
+              <TabsContent value="tab4">Funds</TabsContent>
+            </CardContent>
+          </div>
+        </Tabs>
       </Card>
     </article>
   );

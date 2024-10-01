@@ -27,7 +27,7 @@ export const middleware = (request: NextRequest) => {
   }
 
   if (isAuth && inPublicRoute) {
-    return NextResponse.redirect(new URL("/account", request.nextUrl));
+    return NextResponse.redirect(new URL("/overview", request.nextUrl));
   }
 
   return NextResponse.next();

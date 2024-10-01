@@ -9,22 +9,22 @@ const Stats = () => {
     },
     {
       label: "Expenses",
-      value: "₱20,800/quarter",
+      value: "₱4,800/m avg.",
     },
     {
-      label: "Expenses",
-      value: "₱1,500/m avg.",
+      label: "Target Expenses",
+      value: "₱2,500/m avg.",
     },
     {
       label: "Net Savings",
-      value: "₱5,500/m",
+      value: "₱50,000/m",
     },
   ];
 
   return (
-    <div className="flex justify-between">
+    <div className="grid grid-cols-4 gap-3">
       {Attributes.map((item, i) => (
-        <div key={i}>
+        <div key={i} className="col-span-1">
           <CardDescription>{item.label}</CardDescription>
           <CardTitle className="text-2xl font-medium">{item.value}</CardTitle>
         </div>

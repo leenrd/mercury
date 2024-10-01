@@ -9,7 +9,7 @@ const DashboardLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <section className="w-screen bg-zinc-100">
+    <section className="bg-zinc-100">
       <Navbar />
       <Wrapper body>{children}</Wrapper>
     </section>
