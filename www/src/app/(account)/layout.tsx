@@ -8,7 +8,7 @@ const AccountLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <section className="w-screen bg-zinc-100">
+    <section className="w-screen h-screen bg-zinc-100">
       <Navbar />
       <Wrapper body>{children}</Wrapper>
     </section>

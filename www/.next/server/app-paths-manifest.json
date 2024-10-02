@@ -2,6 +2,6 @@
   "/(dashboard)/market/page": "app/(dashboard)/market/page.js",
   "/(dashboard)/overview/page": "app/(dashboard)/overview/page.js",
   "/(dashboard)/vault/page": "app/(dashboard)/vault/page.js",
-  "/(dashboard)/transactions/page": "app/(dashboard)/transactions/page.js",
-  "/(account)/settings/page": "app/(account)/settings/page.js"
+  "/(account)/settings/page": "app/(account)/settings/page.js",
+  "/(dashboard)/transactions/page": "app/(dashboard)/transactions/page.js"
 }
