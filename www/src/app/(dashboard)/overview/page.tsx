@@ -28,7 +28,10 @@ const AccountPage = () => {
           </CardHeader>
           <div>
             <CardContent>
-              <TabsContent value="tab1" className="grid grid-cols-2 h-full">
+              <TabsContent
+                value="tab1"
+                className="grid grid-cols-2 px-16 h-full"
+              >
                 <AssetGraph className="col-span-1" />
                 <AssetTable className="col-span-1" />
               </TabsContent>
