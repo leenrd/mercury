@@ -4,6 +4,7 @@ import NetWorthGraph from "./_partials/networth-graph";
 import NetWorthStat from "./_partials/networth-stat";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AssetGraph from "./_partials/asset-graph";
+import AssetTable from "./_partials/asset-table";
 
 const AccountPage = () => {
   return (
@@ -27,8 +28,9 @@ const AccountPage = () => {
           </CardHeader>
           <div>
             <CardContent>
-              <TabsContent value="tab1">
-                <AssetGraph />
+              <TabsContent value="tab1" className="grid grid-cols-2 h-full">
+                <AssetGraph className="col-span-1" />
+                <AssetTable className="col-span-1" />
               </TabsContent>
               <TabsContent value="tab2">Liabilities</TabsContent>
               <TabsContent value="tab3">CashFlow</TabsContent>

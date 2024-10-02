@@ -54,7 +54,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full border-b text-primary font-base bg-background/90 backdrop-blur-lg">
+    <nav className="fixed top-0 left-0 w-full border-b text-primary font-base bg-background/30 backdrop-blur-lg z-[2]">
       <Wrapper className="flex items-center justify-between">
         <section className="flex gap-3 items-center">
           <div className="flex items-center justify-center">
