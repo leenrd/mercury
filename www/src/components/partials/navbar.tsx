@@ -48,10 +48,6 @@ const Navbar = () => {
 
   const DROPLINKS = [
     {
-      href: "/profile",
-      label: "Profile",
-    },
-    {
       href: "/settings",
       label: "Settings",
     },
@@ -109,12 +105,6 @@ const Navbar = () => {
 
               <DropdownMenuGroup>
                 <Link href={DROPLINKS[0].href} scroll={false}>
-                  <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
-                  </DropdownMenuItem>
-                </Link>
-                <Link href={DROPLINKS[1].href} scroll={false}>
                   <DropdownMenuItem>
                     <Settings className="mr-2 h-4 w-4" />
                     <span>Settings</span>

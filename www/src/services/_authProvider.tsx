@@ -1,10 +1,11 @@
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import { createContext, useState, useEffect, ReactNode } from "react";
 
 interface AuthContextType {
-  token: string | null;
-  login: (username: string, password: string) => Promise<void>;
-  logout: () => void;
-  isAuthenticated: boolean;
+  useLogin: (username: string, password: string) => unknown;
+  useLogout: () => void;
+  isAuth: boolean;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
@@ -12,25 +13,41 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 );
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useState<string | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuth, setIsAuth] = useState(false);
 
-  // TODO
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-  }, []);
+  const useLogin = async (username: string, password: string) => {
+    return useMutation({
+      mutationKey: ["login"],
+      mutationFn: async () => {
+        const { data } = await axios.post("http://localhost:3000/auth/login", {
+          username,
+          password,
+        });
 
-  // TODO
-  const login = async (username: string, password: string) => {};
+        return data;
+      },
+      onSuccess: (data) => {
+        setIsAuth(true);
+        localStorage.setItem("token", data.access_token);
+      },
+    });
+  };
 
-  const logout = async () => {
-    setToken(null);
-    setIsAuthenticated(false);
-    localStorage.removeItem("token");
+  const useLogout = async () => {
+    return useMutation({
+      mutationKey: ["logout"],
+      mutationFn: async () => {
+        await axios.post("http://localhost:3000/auth/logout");
+      },
+      onSuccess: () => {
+        setIsAuth(false);
+        localStorage.removeItem("token");
+      },
+    });
   };
 
   return (
-    <AuthContext.Provider value={{ token, login, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ useLogin, useLogout, isAuth }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,4 +1,3 @@
-import Footer from "@/components/partials/footer";
 import Navbar from "@/components/partials/navbar";
 import Wrapper from "@/components/partials/wrapper";
 import React from "react";

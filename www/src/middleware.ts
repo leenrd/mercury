@@ -15,6 +15,8 @@ export const middleware = (request: NextRequest) => {
   };
 
   // const isAuth = request.cookies.has("acc_token");
+  // or
+  // const isAuth = localStorage.getItem("token");
   // temp auth state
   let isAuth = true;
 

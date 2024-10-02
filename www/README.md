@@ -6,16 +6,8 @@ todo
 - local postgres + tablePlus
 - implement design patterns: factory/builder/repository
 
-pages
+today:
 
-- auth
-- settings / profile
-- tabs:
-  - account: total accounts analytics
-    - net-worth graph
-    - assets graph
-    - liabilities graph
-  - vault: list of assets + management
-  - transactions table
-  - optimize: gen algo / dividends calculation base on target monthly income
-  - market: stock watch-list
+- auth in frontend
+- profile
+- settings
