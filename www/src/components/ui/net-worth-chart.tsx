@@ -22,11 +22,11 @@ const chartData = [
 const chartConfig = {
   Liabilities: {
     label: "Liabilities",
-    color: "hsl(var(--chart-1))",
+    color: "#fb7185",
   },
   Assets: {
     label: "Assets",
-    color: "hsl(var(--chart-2))",
+    color: "#22c55e",
   },
 } satisfies ChartConfig;
 
