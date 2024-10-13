@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import React from "react";
+import UpdateForm from "./_partials/form";
 
 const SettingsPage = () => {
   return (
@@ -13,9 +14,8 @@ const SettingsPage = () => {
 
       <Card>
         <CardHeader>
-          <h2 className="font-bold text-xl">Profile</h2>
+          <UpdateForm />
         </CardHeader>
-        <CardContent>Forms</CardContent>
       </Card>
     </article>
   );

@@ -22,8 +22,6 @@ const AccountPage = () => {
             <TabsList>
               <TabsTrigger value="tab1">Assets</TabsTrigger>
               <TabsTrigger value="tab2">Liabilities</TabsTrigger>
-              <TabsTrigger value="tab3">CashFlow</TabsTrigger>
-              <TabsTrigger value="tab4">Funds</TabsTrigger>
             </TabsList>
           </CardHeader>
           <div>
@@ -35,9 +33,13 @@ const AccountPage = () => {
                 <AssetGraph className="col-span-1" />
                 <AssetTable className="col-span-1" />
               </TabsContent>
-              <TabsContent value="tab2">Liabilities</TabsContent>
-              <TabsContent value="tab3">CashFlow</TabsContent>
-              <TabsContent value="tab4">Funds</TabsContent>
+              <TabsContent
+                value="tab2"
+                className="grid grid-cols-2 px-16 h-full"
+              >
+                <AssetGraph className="col-span-1" />
+                <AssetTable className="col-span-1" />
+              </TabsContent>
             </CardContent>
           </div>
         </Tabs>
