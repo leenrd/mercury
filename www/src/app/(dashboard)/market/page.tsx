@@ -4,7 +4,7 @@ import React, { useMemo } from "react";
 import MainCard from "./_partials/main-card";
 import SubCard from "./_partials/sub-card";
 import SimilarCard from "./_partials/similar-card";
-import { useGetMarketNews } from "@/services/_marketNewsProvider";
+import { useGetMarketNews } from "@/services/_market-news-provider";
 
 const MarketPage = () => {
   const { data: news, isError, isPending, isSuccess } = useGetMarketNews();

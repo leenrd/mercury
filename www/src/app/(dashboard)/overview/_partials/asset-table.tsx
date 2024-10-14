@@ -25,10 +25,10 @@ const AssetTable = ({ className }: { className?: string }) => {
           {chartData.map((data, i) => (
             <TableRow key={i}>
               <TableCell className="font-medium">
-                {data.browser.toUpperCase()}
+                {data.type.toUpperCase()}
               </TableCell>
-              <TableCell>{data.visitors} %</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
+              <TableCell>{data.quantity} ent</TableCell>
+              <TableCell className="text-right">P250.00</TableCell>
             </TableRow>
           ))}
         </TableBody>

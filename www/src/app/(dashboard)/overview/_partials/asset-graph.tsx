@@ -12,8 +12,6 @@ import {
 import { cn } from "@/lib/utils";
 import { chartData } from "../_data/data";
 
-export const description = "A donut chart with text";
-
 const chartConfig = {
   visitors: {
     label: "Visitors",
@@ -42,7 +40,7 @@ const chartConfig = {
 
 export default function AssetGraph({ className }: { className?: string }) {
   const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
+    return chartData.reduce((acc, curr) => acc + curr.quantity, 0);
   }, []);
 
   return (
@@ -57,8 +55,8 @@ export default function AssetGraph({ className }: { className?: string }) {
         />
         <Pie
           data={chartData}
-          dataKey="visitors"
-          nameKey="browser"
+          dataKey="quantity"
+          nameKey="type"
           innerRadius={120}
           strokeWidth={5}
         >
