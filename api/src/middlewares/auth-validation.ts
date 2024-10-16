@@ -1,18 +1,30 @@
-import { verifyAccessToken } from "@/lib/auth.utils";
+import { DecodeAccessToken } from "@/lib/auth.utils";
 import { Request, Response, NextFunction } from "express";
 
-const validateFn = (req: Request, res: Response, next: NextFunction) => {
+const validateAuthFn = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const token = req.headers["authorization" || "Authorization"];
 
-  if (!token?.startsWith("Bearer ")) {
+  if (!token) {
     console.log("Unauthorized Error: @Middleware/validateFn");
     return res.status(401).json({ message: "Unauthorized" });
   }
 
-  const access_token = token.split(" ")[1];
-  verifyAccessToken(req, res, access_token);
+  try {
+    const access_token = token.split(" ")[1];
+    const decoded = DecodeAccessToken(access_token);
 
-  return next();
+    req.id = decoded.id;
+    req.username = decoded.username;
+
+    return next();
+  } catch (error) {
+    console.log("Unauthorized Error: @Middleware/validateFn");
+    return res.status(401).json({ message: "Access token invalid or expired" });
+  }
 };
 
-export default validateFn;
+export default validateAuthFn;

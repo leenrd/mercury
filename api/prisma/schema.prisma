@@ -14,37 +14,33 @@ datasource db {
 }
 
 model User {
-  id        String      @id @default(cuid())
-  username  String      @unique
+  id        String   @id @default(cuid())
+  username  String   @unique
   password  String
-  watchlist Watchlist[]
-  portfolio Portfolio[]
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @default(now()) @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Asset {
-  id            String    @id @default(cuid())
+  id            String   @id @default(cuid())
   label         String
   type          String
   quantity      Float
-  portfolio     Portfolio @relation(fields: [portfolioId], references: [id])
   portfolioId   String
   purchasePrice Int
-  purchaseDate  DateTime  @default(now())
-  createdAt     DateTime  @default(now())
+  purchaseDate  DateTime @default(now())
+  createdAt     DateTime @default(now())
 }
 
 model Liability {
-  id            String    @id @default(cuid())
+  id            String   @id @default(cuid())
   label         String
   type          String
   quantity      Float
-  portfolio     Portfolio @relation(fields: [portfolioId], references: [id])
   portfolioId   String
   purchasePrice Int
-  purchaseDate  DateTime  @default(now())
-  createdAt     DateTime  @default(now())
+  purchaseDate  DateTime @default(now())
+  createdAt     DateTime @default(now())
 }
 
 model Transaction {
@@ -66,22 +62,4 @@ model Account {
   value        Float
   createdAt    DateTime      @default(now())
   transactions Transaction[] @relation("transaction")
-}
-
-model Watchlist {
-  id        String   @id @default(cuid())
-  label     String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  createdAt DateTime @default(now())
-}
-
-model Portfolio {
-  id          String      @id @default(cuid())
-  label       String
-  user        User        @relation(fields: [userId], references: [id])
-  userId      String
-  assets      Asset[]
-  liabilities Liability[]
-  createdAt   DateTime    @default(now())
 }

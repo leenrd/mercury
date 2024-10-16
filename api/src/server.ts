@@ -6,6 +6,10 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { HTTP_STATUS } from "./lib/http";
 import { NODE_ENV } from "./lib/env";
+import validateAuthFn from "./middlewares/auth-validation";
+import authRoute from "@routes/auth.route";
+import userRoute from "@routes/user.route";
+import assetRoute from "@routes/assets.route";
 
 // CONFIG
 dotenv.config();
@@ -19,7 +23,7 @@ api.use(bodyParser.urlencoded({ extended: false }));
 api.use(cors());
 
 let uptime = process.uptime();
-api.use("/", (_, res: Response) => {
+api.get("/", (_, res: Response) => {
   res.status(uptime ? HTTP_STATUS.OK : HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
     name: "Mercury server (API)",
     status: uptime ? "Operational" : "Requires Attention",
@@ -27,12 +31,14 @@ api.use("/", (_, res: Response) => {
     uptime: `${uptime} ("ph-ASIA") : (Server Time - UTC)`,
   });
 });
+
+// ROUTES
+api.use("/auth", authRoute);
+api.use("/user", validateAuthFn, userRoute);
+api.use("/assets", validateAuthFn, assetRoute);
+
+// ERROR HANDLING
 api.all("*", () => {
   throw new Error("Resource not found.");
 });
-
-// ROUTES
-api.use("/auth", require("@routes/auth.route"));
-api.use("/user", require("@routes/user.route"));
-
 export default api;
