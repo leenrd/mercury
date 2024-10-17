@@ -1,4 +1,4 @@
 # Mercury
 
 > [!Important]
-> Asset manager app
+> Wealth Portfolio manager app

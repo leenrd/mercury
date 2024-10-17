@@ -20,6 +20,10 @@ import {
   InnerAccordionItem,
   InnerAccordionTrigger,
 } from "@/components/ui/inner-accordion";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { Sheet, SheetTrigger } from "@/components/ui/sheet";
+import EditSheet from "./_partials/edit-sheet";
 
 const VaultPage = () => {
   return (
@@ -38,7 +42,20 @@ const VaultPage = () => {
 
       <Card>
         <CardHeader className="">
-          <CardTitle>Vault</CardTitle>
+          <CardTitle className="flex justify-between">
+            <div className="text-xl">Vault</div>
+
+            <Sheet>
+              <SheetTrigger>
+                <Button size={"icon"} variant={"outline"}>
+                  <Plus size={15} />
+                </Button>
+              </SheetTrigger>
+              <EditSheet />
+            </Sheet>
+          </CardTitle>
+
+          {/*  */}
           <div className="px-12 pt-8 flex justify-between">
             <CardDescription>Asset Class</CardDescription>
             <CardDescription>% in Assets</CardDescription>

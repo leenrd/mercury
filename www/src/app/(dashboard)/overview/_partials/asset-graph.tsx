@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/chart";
 import { cn } from "@/lib/utils";
 import { chartData } from "../_data/data";
+import { useGetAssets, useGetTotalAssetCount } from "@/hooks/use-assets";
 
 const chartConfig = {
   visitors: {
@@ -39,6 +40,14 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function AssetGraph({ className }: { className?: string }) {
+  const { data: assetCount, isError: countError } = useGetTotalAssetCount();
+
+  const { data: assetData, isError: dataError, isLoading } = useGetAssets();
+
+  // if (isLoading) return <div>Loading...</div>;
+  // if (dataError) return <div>Error...</div>;
+  // if (countError) return <div>Error...</div>;
+
   const totalVisitors = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.quantity, 0);
   }, []);

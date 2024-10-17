@@ -33,12 +33,12 @@ const SimilarCard = ({ data }: SimilarCardProps) => {
                     <h1 className="text-3xl font-semibold cursor-pointer hover:underline">
                       {item.title}
                     </h1>
-                    <p>{item.description}</p>
+                    <p>{item.category}</p>
                     <p>{item.description}</p>
                   </div>
                   <Image
                     className="rounded-lg brightness-75"
-                    src={item.imageUrl}
+                    src={"https://picsum.photos/1200/500"}
                     alt="news_pic"
                     width={400}
                     height={200}

@@ -7,6 +7,7 @@ import { NetWorthChart } from "@/components/ui/net-worth-chart";
 const NetWorthGraph = () => {
   return (
     <CardContent>
+      inProgress...
       <NetWorthChart />
     </CardContent>
   );

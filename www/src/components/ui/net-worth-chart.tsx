@@ -8,8 +8,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-export const description = "An area chart with gradient fill";
-
 const chartData = [
   { month: "January", Liabilities: 186, Assets: 80 },
   { month: "February", Liabilities: 305, Assets: 200 },
@@ -22,7 +20,7 @@ const chartData = [
 const chartConfig = {
   Liabilities: {
     label: "Liabilities",
-    color: "#fb7185",
+    color: "#f59e0b",
   },
   Assets: {
     label: "Assets",

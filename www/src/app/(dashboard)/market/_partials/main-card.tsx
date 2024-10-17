@@ -24,7 +24,7 @@ const MainCard = ({ data }: MainCardProps) => {
       <CardContent>
         <Image
           className="rounded-lg cursor-pointer brightness-75"
-          src={data.image_url}
+          src={"https://picsum.photos/1200/500"}
           alt="news_pic"
           width={1200}
           height={500}
@@ -34,7 +34,7 @@ const MainCard = ({ data }: MainCardProps) => {
             {data.title}
           </h3>
           <p>
-            {data.description} • {data.published_at}
+            {data.category} • {data.date}
           </p>
         </div>
       </CardContent>

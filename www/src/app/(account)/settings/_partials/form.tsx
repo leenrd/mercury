@@ -16,9 +16,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { profileUpdateSchema } from "../_zod/schema";
 import { z } from "zod";
+import { useUpdateProfile } from "@/hooks/use-profile-update";
 
 const UpdateForm = () => {
-  type tUpdateProfileFormType = z.infer<typeof profileUpdateSchema>;
+  const mutation = useUpdateProfile();
   const updateProfileForm = useForm<tUpdateProfileFormType>({
     resolver: zodResolver(profileUpdateSchema),
     defaultValues: {
@@ -27,11 +28,12 @@ const UpdateForm = () => {
       confirmPassword: "",
     },
   });
+  type tUpdateProfileFormType = z.infer<typeof profileUpdateSchema>;
 
   function handleUpdateProfileSubmit(values: tUpdateProfileFormType) {
     // upload to api.
-
-    console.log(values);
+    mutation.mutate(values);
+    console.log("submitting: ", values);
   }
 
   return (

@@ -1,6 +1,18 @@
 version: "3.9"
 
 services:
+  api:
+    container_name: api
+    image: backend:latest
+    restart: always
+    build:
+      context: ./api
+      dockerfile: api.dockerfile
+    ports:
+      - 3000:3000
+    env_file:
+      - ./api/.env
+
   db:
     container_name: db
     image: postgres:12

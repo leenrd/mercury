@@ -13,7 +13,9 @@ const SubCard = ({ data }: SubCardProps) => {
     <>
       {" "}
       <Card className="col-span-1">
-        <CardHeader></CardHeader>
+        <CardHeader className="font-bold">
+          Long Headline for heading news • 2024
+        </CardHeader>
         <CardContent className="relative">
           <Image
             className="rounded-lg cursor-pointer brightness-75"
@@ -31,7 +33,9 @@ const SubCard = ({ data }: SubCardProps) => {
         </CardContent>
       </Card>
       <Card className="col-span-1">
-        <CardHeader></CardHeader>
+        <CardHeader className="font-bold">
+          Long Headline for heading news • 2024
+        </CardHeader>
         <CardContent className="relative">
           <Image
             className="rounded-lg cursor-pointer brightness-75"

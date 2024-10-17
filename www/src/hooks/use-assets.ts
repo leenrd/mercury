@@ -5,7 +5,7 @@ export const useGetAssets = () => {
   return useQuery({
     queryKey: ["assets"],
     queryFn: async () => {
-      const { data } = await api.get(`${process.env.baseUrl}/assets`);
+      const { data } = await api.get(`${process.env.baseUrl}/assets/`);
       return data;
     },
     refetchOnWindowFocus: false,

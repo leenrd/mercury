@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import React from "react";
 import {
@@ -9,8 +11,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { chartData } from "../_data/data";
+import { useGetAssets } from "@/hooks/use-assets";
 
 const AssetTable = ({ className }: { className?: string }) => {
+  const { data: assetsData, isError, isLoading } = useGetAssets();
+
+  // if (isLoading) return <div>Loading...</div>;
+  // if (isError) return <div>Error...</div>;
+
   return (
     <div className={cn("py-10", className)}>
       <Table>
