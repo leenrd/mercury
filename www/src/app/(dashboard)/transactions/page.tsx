@@ -7,6 +7,9 @@ import {
 } from "@/components/ui/card";
 import React from "react";
 import Stats from "./_partials/stats";
+import { DataTable } from "./_partials/data-table";
+import { columns } from "./_partials/columns";
+import { Transactions } from "./_data/sample";
 
 const TransactionPage = () => {
   return (
@@ -17,7 +20,11 @@ const TransactionPage = () => {
           <Stats />
         </CardHeader>
 
-        <CardContent>Table of transactions here</CardContent>
+        <br />
+
+        <CardContent>
+          <DataTable columns={columns} data={Transactions} />
+        </CardContent>
       </Card>
     </article>
   );
