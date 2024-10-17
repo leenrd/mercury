@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "@/lib/prisma";
+import { HTTP_STATUS } from "@/lib/http";
 
 const temp_assets = [
   { type: "Real Estate", quantity: 173, fill: "#0090FF" },
@@ -15,13 +16,13 @@ const getAssets_controller = async (req: Request, res: Response) => {
     // const user_id = req.id;
     // console.log("user_id", user_id);
 
-    return res.status(200).json(temp_assets);
+    return res.status(HTTP_STATUS.OK).json(temp_assets);
   } catch (error: any) {
     console.error(
       "Error creating user: @getAssets/controller, META: ",
       error.message
     );
-    return res.status(500).send(error);
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send(error);
   }
 };
 
@@ -35,13 +36,13 @@ const getAssetTotal_controller = async (req: Request, res: Response) => {
       0
     );
 
-    return res.status(200).json(total_assets);
+    return res.status(HTTP_STATUS.OK).json(total_assets);
   } catch (error: any) {
     console.error(
       "Error creating user: @getAssetTotal/controller, META: ",
       error.message
     );
-    return res.status(500).send(error);
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send(error);
   }
 };
 

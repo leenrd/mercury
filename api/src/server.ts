@@ -36,6 +36,7 @@ api.get("/", (_, res: Response) => {
 api.use("/auth", authRoute);
 api.use("/user", validateAuthFn, userRoute);
 api.use("/assets", validateAuthFn, assetRoute);
+api.use("/vault", validateAuthFn, assetRoute);
 
 // ERROR HANDLING
 api.all("*", () => {

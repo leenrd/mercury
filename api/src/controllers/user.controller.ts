@@ -27,7 +27,7 @@ const getUser_controller = async (req: Request, res: Response) => {
       "Error creating user: @getUser/controller, META: ",
       error.message
     );
-    return res.status(500).send(error);
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send(error);
   }
 };
 
@@ -64,7 +64,7 @@ const updateUser_controller = async (req: Request, res: Response) => {
       "Error creating user: @updateUser/controller, META: ",
       error.message
     );
-    return res.status(500).send(error);
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send(error);
   }
 };
 export default { getUser_controller, updateUser_controller };

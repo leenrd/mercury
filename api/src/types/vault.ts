@@ -1,0 +1,6 @@
+export const VAULT_TYPE = {
+  BANK_ACCOUNT: "BANK_ACCOUNT",
+  CASH: "CASH",
+  FIXED_INCOME: "FIXED_INCOME",
+  INVESTMENT: "INVESTMENT",
+} as const;

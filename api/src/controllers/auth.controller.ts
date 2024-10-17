@@ -32,7 +32,7 @@ export default class AuthController implements _auth {
         "Error creating user: @AuthController/register, META: ",
         error.message
       );
-      return res.status(500).send(error);
+      return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send(error);
     }
   }
 
@@ -60,7 +60,7 @@ export default class AuthController implements _auth {
         "Error creating user: @AuthController/login, META: ",
         error.message
       );
-      return res.status(500).send(error);
+      return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send(error);
     }
   }
 
@@ -79,7 +79,7 @@ export default class AuthController implements _auth {
         "Error creating user: @AuthController/logout, META: ",
         error.message
       );
-      return res.status(500).send(error);
+      return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send(error);
     }
   }
 }
