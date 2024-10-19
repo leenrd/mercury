@@ -46,7 +46,7 @@ const VaultPage = () => {
             <div className="text-xl">Vault</div>
 
             <Sheet>
-              <SheetTrigger>
+              <SheetTrigger asChild>
                 <Button size={"icon"} variant={"outline"}>
                   <Plus size={15} />
                 </Button>

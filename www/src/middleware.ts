@@ -18,7 +18,7 @@ export const middleware = (request: NextRequest) => {
   // or
   // const isAuth = localStorage.getItem("token");
   // temp auth state
-  let isAuth = true;
+  let isAuth = false;
 
   const path = request.nextUrl.pathname;
   const inProtectedRoute = paths.protectedRoutes.includes(path);
