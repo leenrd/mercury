@@ -10,6 +10,7 @@ import validateAuthFn from "./middlewares/auth-validation";
 import authRoute from "@routes/auth.route";
 import userRoute from "@routes/user.route";
 import assetRoute from "@routes/assets.route";
+import cookieParser from "cookie-parser";
 
 // CONFIG
 dotenv.config();
@@ -19,6 +20,7 @@ api.use(helmet());
 api.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 api.use(morgan("common"));
 api.use(bodyParser.json());
+api.use(cookieParser());
 api.use(bodyParser.urlencoded({ extended: false }));
 api.use(cors());
 
