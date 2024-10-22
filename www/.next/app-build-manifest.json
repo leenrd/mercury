@@ -31,21 +31,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(dashboard)/layout.js"
     ],
-    "/(dashboard)/market/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/market/page.js"
-    ],
-    "/(account)/settings/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(account)/settings/page.js"
-    ],
-    "/(account)/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(account)/layout.js"
-    ],
     "/(dashboard)/vault/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",

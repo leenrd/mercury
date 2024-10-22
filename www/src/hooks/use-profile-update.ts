@@ -4,10 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 export const useUpdateProfile = (): any => {
   return useMutation({
     mutationFn: (data) => {
-      const response = api.post(
-        `${process.env.baseUrl}/user/profile/update`,
-        data
-      );
+      const response = api.post(`/user/profile/update`, data);
 
       return response;
     },

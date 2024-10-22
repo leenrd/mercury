@@ -1,8 +1,7 @@
 {
-  "/(dashboard)/market/page": "app/(dashboard)/market/page.js",
-  "/(account)/settings/page": "app/(account)/settings/page.js",
-  "/(dashboard)/vault/page": "app/(dashboard)/vault/page.js",
-  "/(dashboard)/transactions/page": "app/(dashboard)/transactions/page.js",
+  "/(auth)/signup/page": "app/(auth)/signup/page.js",
   "/(auth)/login/page": "app/(auth)/login/page.js",
-  "/(auth)/signup/page": "app/(auth)/signup/page.js"
+  "/(dashboard)/overview/page": "app/(dashboard)/overview/page.js",
+  "/(dashboard)/vault/page": "app/(dashboard)/vault/page.js",
+  "/(dashboard)/transactions/page": "app/(dashboard)/transactions/page.js"
 }

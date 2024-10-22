@@ -8,13 +8,14 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/use-auth";
+import { Loader } from "lucide-react";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -22,6 +23,14 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
+  const { loginMutation } = useAuth();
+  const {
+    mutateAsync: login,
+    isPending: loginLoading,
+    isError,
+    failureReason: loginErrorMsg,
+  } = loginMutation;
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,11 +40,18 @@ const LoginForm = () => {
   });
 
   function submitLogin(data: z.infer<typeof formSchema>) {
+    login(data);
     console.log(data);
   }
 
   return (
     <Form {...form}>
+      {isError ? (
+        <p className="text-red-500">
+          {loginErrorMsg?.response?.data.message ??
+            "An error occurred while logging in. Try again."}
+        </p>
+      ) : null}
       <form
         onSubmit={form.handleSubmit(submitLogin)}
         className="space-y-5 w-[20vw] md:w-[30vw]"
@@ -60,17 +76,16 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="8 characters" {...field} />
+                <Input type="password" placeholder="8 characters" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
         <br />
-
         <div className="text-center">
-          <Button type="submit" className="px-11">
+          <Button type="submit" className="px-8" disabled={loginLoading}>
+            {loginLoading ? <Loader className="h-4 animate-spin mr-1" /> : null}
             Login
           </Button>
         </div>

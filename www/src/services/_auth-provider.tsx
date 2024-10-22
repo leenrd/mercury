@@ -1,10 +1,18 @@
-import { useMutation } from "@tanstack/react-query";
+"use client";
+
+import { createContext, useEffect, useState, ReactNode } from "react";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import axios from "axios";
-import { createContext, useState, ReactNode } from "react";
+import { useRouter } from "next/navigation";
 
 interface AuthContextType {
-  useLogin: (username: string, password: string) => unknown;
-  useLogout: () => void;
+  loginMutation: UseMutationResult<
+    any,
+    unknown,
+    { username: string; password: string },
+    unknown
+  >;
+  logoutMutation: UseMutationResult<any, unknown, void, unknown>;
   isAuth: boolean;
 }
 
@@ -14,40 +22,55 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuth, setIsAuth] = useState(false);
+  const router = useRouter();
 
-  const useLogin = async (username: string, password: string) => {
-    return useMutation({
-      mutationKey: ["login"],
-      mutationFn: async () => {
-        const { data } = await axios.post("http://localhost:3000/auth/login", {
-          username,
-          password,
-        });
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsAuth(!!token);
+  }, []);
 
-        return data;
-      },
-      onSuccess: (data) => {
-        setIsAuth(true);
-        localStorage.setItem("token", data.access_token);
-      },
-    });
-  };
+  const loginMutation = useMutation({
+    mutationFn: async ({
+      username,
+      password,
+    }: {
+      username: string;
+      password: string;
+    }) => {
+      const { data } = await axios.post("http://localhost:3000/auth/login", {
+        username,
+        password,
+      });
+      return data;
+    },
+    onSuccess: (data) => {
+      setIsAuth(true);
+      localStorage.setItem("token", data.access_token);
+      document.cookie = `acc_token=${data.access_token}; path=/;`;
+      router.push("/overview");
+    },
+    onError: () => {
+      console.error("Login failed");
+    },
+  });
 
-  const useLogout = async () => {
-    return useMutation({
-      mutationKey: ["logout"],
-      mutationFn: async () => {
-        await axios.post("http://localhost:3000/auth/logout");
-      },
-      onSuccess: () => {
-        setIsAuth(false);
-        localStorage.removeItem("token");
-      },
-    });
-  };
+  const logoutMutation = useMutation({
+    mutationFn: async () => {
+      await axios.post("http://localhost:3000/auth/logout");
+    },
+    onSuccess: () => {
+      setIsAuth(false);
+      localStorage.removeItem("token");
+      document.cookie = `acc_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+      router.push("/login");
+    },
+    onError: () => {
+      console.error("Logout failed");
+    },
+  });
 
   return (
-    <AuthContext.Provider value={{ useLogin, useLogout, isAuth }}>
+    <AuthContext.Provider value={{ isAuth, loginMutation, logoutMutation }}>
       {children}
     </AuthContext.Provider>
   );

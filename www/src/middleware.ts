@@ -2,25 +2,23 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
 export const middleware = (request: NextRequest) => {
-  const paths = {
-    protectedRoutes: ["/settings", "/transactions", "/vault", "/overview"],
-    publicRoutes: ["/login", "/signup"],
-    commonRoutes: ["/market"],
-  };
-
-  // const isAuth = localStorage.getItem("token");
-  // temp auth state
-  let isAuth = false;
+  const protectedRoutes = ["/settings", "/transactions", "/vault", "/overview"];
+  // auth checker
+  const token = request.cookies.get("acc_token");
 
   const path = request.nextUrl.pathname;
-  const inProtectedRoute = paths.protectedRoutes.includes(path);
-  const inPublicRoute = paths.publicRoutes.includes(path);
+  const isProtectedRoute = protectedRoutes.includes(path);
+  const isAuthenticated = Boolean(token);
 
-  if (!isAuth && inProtectedRoute) {
+  if (isProtectedRoute && !isAuthenticated) {
     return NextResponse.redirect(new URL("/login", request.nextUrl));
   }
 
-  if (isAuth && inPublicRoute) {
+  if (
+    !isProtectedRoute &&
+    isAuthenticated &&
+    (path === "/login" || path === "/signup")
+  ) {
     return NextResponse.redirect(new URL("/overview", request.nextUrl));
   }
 
@@ -29,12 +27,11 @@ export const middleware = (request: NextRequest) => {
 
 export const config = {
   matcher: [
-    "/profile",
     "/settings",
-    "/overview",
-    "/market",
     "/transactions",
     "/vault",
+    "/overview",
+    "/market",
     "/login",
     "/signup",
     "/",

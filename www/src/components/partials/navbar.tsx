@@ -21,7 +21,7 @@ import { useAuth } from "@/hooks/use-auth";
 
 const Navbar = () => {
   const path = usePathname();
-  const { isAuth, useLogout } = useAuth();
+  const { isAuth, logoutMutation } = useAuth();
   const TABS = [
     {
       href: "/market",
@@ -66,7 +66,7 @@ const Navbar = () => {
           >
             {TABS.map((tab, index) =>
               !isAuth && tab.href !== "/market" ? (
-                <></>
+                <div key={index}></div>
               ) : (
                 <Link href={tab.href} key={index} data-id={tab} scroll={false}>
                   <button
@@ -125,7 +125,7 @@ const Navbar = () => {
                   <span>Support</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => logoutMutation.mutateAsync()}>
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Log out</span>
                 </DropdownMenuItem>
