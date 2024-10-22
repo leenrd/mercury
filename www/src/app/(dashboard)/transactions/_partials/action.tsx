@@ -10,6 +10,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import React from "react";
+import DeleteItem from "./delete-item";
 
 const Action = () => {
   return (
@@ -53,9 +54,14 @@ const Action = () => {
       </section>
 
       <SheetFooter>
-        <SheetClose asChild>
-          <Button type="submit">Save changes</Button>
-        </SheetClose>
+        <div className="flex flex-row-reverse gap-3">
+          <SheetClose asChild>
+            <Button type="submit">Save changes</Button>
+          </SheetClose>
+          <SheetClose asChild>
+            <DeleteItem />
+          </SheetClose>
+        </div>
       </SheetFooter>
     </SheetContent>
   );
