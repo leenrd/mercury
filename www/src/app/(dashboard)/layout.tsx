@@ -1,6 +1,8 @@
-import Footer from "@/components/partials/footer";
+"use client";
+
 import Navbar from "@/components/partials/navbar";
 import Wrapper from "@/components/partials/wrapper";
+import { AuthProvider } from "@/services/_auth-provider";
 import React from "react";
 
 const DashboardLayout = ({
@@ -9,10 +11,12 @@ const DashboardLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <section className="bg-zinc-100">
-      <Navbar />
-      <Wrapper body>{children}</Wrapper>
-    </section>
+    <AuthProvider>
+      <section className="bg-zinc-100">
+        <Navbar />
+        <Wrapper body>{children}</Wrapper>
+      </section>
+    </AuthProvider>
   );
 };
 

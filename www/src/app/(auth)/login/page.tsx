@@ -7,11 +7,16 @@ import Link from "next/link";
 const LoginPage = () => {
   return (
     <Wrapper body>
-      <section className="h-screen flex flex-col gap-6 items-center">
+      <section className="flex flex-col gap-6 items-center">
         <h1 className="font-bold text-4xl">Welcome back!</h1>
-        <Link href="/signup">
-          <Button variant={"link"}>Or Create account</Button>
-        </Link>
+        <div>
+          <Link href="/signup">
+            <Button variant={"link"}>Create account</Button>
+          </Link>
+          <Link href="/market">
+            <Button variant={"link"}>or Goto Markets</Button>
+          </Link>
+        </div>
 
         <br />
 

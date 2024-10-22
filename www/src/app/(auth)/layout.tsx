@@ -1,4 +1,4 @@
-import Footer from "@/components/partials/footer";
+import Image from "next/image";
 import React from "react";
 
 const AuthLayout = ({
@@ -7,9 +7,17 @@ const AuthLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <article>
-      {children}
-      <Footer />
+    <article className="grid grid-cols-2 h-screen">
+      <div className="col-span-1">{children}</div>
+      <div className="col-span-1 relative object-cover">
+        <Image
+          src={"/auth-bg.png"}
+          alt="auth-bg"
+          fill
+          className="col-span-1"
+          draggable={"false"}
+        />
+      </div>
     </article>
   );
 };

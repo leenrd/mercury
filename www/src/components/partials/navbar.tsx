@@ -11,22 +11,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  ChevronDown,
-  Github,
-  LifeBuoy,
-  LogOut,
-  Settings,
-  User,
-} from "lucide-react";
+import { ChevronDown, Github, LifeBuoy, LogOut, Settings } from "lucide-react";
 import Wrapper from "./wrapper";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/hooks/use-auth";
 
 const Navbar = () => {
   const path = usePathname();
+  const { isAuth, useLogout } = useAuth();
   const TABS = [
     {
       href: "/market",
@@ -69,68 +64,79 @@ const Navbar = () => {
             }}
             enableHover
           >
-            {TABS.map((tab, index) => (
-              <Link href={tab.href} key={index} data-id={tab} scroll={false}>
-                <button
-                  type="button"
-                  className={cn(
-                    "px-2.5 py-1.5 text-primary/90 transition-colors duration-300 hover:text-primary dark:text-zinc-400 dark:hover:text-zinc-50",
-                    {
-                      "text-primary font-medium": path === tab.href,
-                    }
-                  )}
-                >
-                  {tab.label}
-                </button>
-              </Link>
-            ))}
+            {TABS.map((tab, index) =>
+              !isAuth && tab.href !== "/market" ? (
+                <></>
+              ) : (
+                <Link href={tab.href} key={index} data-id={tab} scroll={false}>
+                  <button
+                    type="button"
+                    className={cn(
+                      "px-2.5 py-1.5 text-primary/90 transition-colors duration-300 hover:text-primary dark:text-zinc-400 dark:hover:text-zinc-50",
+                      {
+                        "text-primary font-medium": path === tab.href,
+                      }
+                    )}
+                  >
+                    {tab.label}
+                  </button>
+                </Link>
+              )
+            )}
           </AnimatedBackground>
         </section>
 
         <section id="user_drop-down">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="flex items-center">
-                <Settings className="mr-2 h-[18px] w-[18px] stroke-primary/45" />
-                <ChevronDown
-                  className="h-5 w-5 stroke-primary/45"
-                  strokeWidth={2.25}
-                />
-              </Button>
-            </DropdownMenuTrigger>
+          {isAuth ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center">
+                  <Settings className="mr-2 h-[18px] w-[18px] stroke-primary/45" />
+                  <ChevronDown
+                    className="h-5 w-5 stroke-primary/45"
+                    strokeWidth={2.25}
+                  />
+                </Button>
+              </DropdownMenuTrigger>
 
-            <DropdownMenuContent className="w-56" align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
+              <DropdownMenuContent className="w-56" align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
 
-              <DropdownMenuGroup>
-                <Link href={DROPLINKS[0].href} scroll={false}>
+                <DropdownMenuGroup>
+                  <Link href={DROPLINKS[0].href} scroll={false}>
+                    <DropdownMenuItem>
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Settings</span>
+                    </DropdownMenuItem>
+                  </Link>
+                </DropdownMenuGroup>
+
+                <DropdownMenuSeparator />
+
+                <Link href={"https://github.com/leenrd/mercury"}>
                   <DropdownMenuItem>
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
+                    <Github className="mr-2 h-4 w-4" />
+                    <span>GitHub</span>
                   </DropdownMenuItem>
                 </Link>
-              </DropdownMenuGroup>
-
-              <DropdownMenuSeparator />
-
-              <Link href={"https://github.com/leenrd/mercury"}>
                 <DropdownMenuItem>
-                  <Github className="mr-2 h-4 w-4" />
-                  <span>GitHub</span>
+                  <LifeBuoy className="mr-2 h-4 w-4" />
+                  <span>Support</span>
                 </DropdownMenuItem>
-              </Link>
-              <DropdownMenuItem>
-                <LifeBuoy className="mr-2 h-4 w-4" />
-                <span>Support</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : null}
+          {!isAuth ? (
+            <Link href="/login">
+              <Button variant="default">Login</Button>
+            </Link>
+          ) : null}
         </section>
       </Wrapper>
     </nav>

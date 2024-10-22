@@ -3,19 +3,11 @@ import { NextRequest } from "next/server";
 
 export const middleware = (request: NextRequest) => {
   const paths = {
-    protectedRoutes: [
-      "/profile",
-      "/settings",
-      "/account",
-      "/transactions",
-      "/vault",
-    ],
+    protectedRoutes: ["/settings", "/transactions", "/vault", "/overview"],
     publicRoutes: ["/login", "/signup"],
     commonRoutes: ["/market"],
   };
 
-  // const isAuth = request.cookies.has("acc_token");
-  // or
   // const isAuth = localStorage.getItem("token");
   // temp auth state
   let isAuth = false;
@@ -39,7 +31,7 @@ export const config = {
   matcher: [
     "/profile",
     "/settings",
-    "/account",
+    "/overview",
     "/market",
     "/transactions",
     "/vault",
