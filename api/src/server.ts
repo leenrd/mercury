@@ -7,10 +7,11 @@ import morgan from "morgan";
 import { HTTP_STATUS } from "./lib/http";
 import { NODE_ENV } from "./lib/env";
 import validateAuthFn from "./middlewares/auth-validation";
+import cookieParser from "cookie-parser";
 import authRoute from "@routes/auth.route";
 import userRoute from "@routes/user.route";
 import assetRoute from "@routes/assets.route";
-import cookieParser from "cookie-parser";
+import transactionRoute from "@routes/transactions.route";
 
 // CONFIG
 dotenv.config();
@@ -37,8 +38,9 @@ api.get("/", (_, res: Response) => {
 // ROUTES
 api.use("/auth", authRoute);
 api.use("/user", validateAuthFn, userRoute);
-api.use("/assets", validateAuthFn, assetRoute);
-api.use("/vault", validateAuthFn, assetRoute);
+api.use("/transactions", validateAuthFn, transactionRoute);
+// api.use("/assets", validateAuthFn, assetRoute);
+// api.use("/vault", validateAuthFn, assetRoute);
 
 // ERROR HANDLING
 api.all("*", () => {
