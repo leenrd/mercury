@@ -6,6 +6,7 @@ const router = Router();
 const {
   getTransactions_controller,
   getTransactionById_controller,
+  getStats_controller,
   addTransaction_controller,
   updateTransaction_controller,
   deleteTransaction_controller,
@@ -13,6 +14,8 @@ const {
 
 router.route("/all").get(getTransactions_controller);
 router.route("/get/:id").get(getTransactionById_controller);
+router.route("/stats").get(getStats_controller);
+
 router.route("/add").post(addTransaction_controller);
 router.route("/update/:id").put(updateTransaction_controller);
 router.route("/delete/:id").delete(deleteTransaction_controller);

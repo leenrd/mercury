@@ -58,6 +58,64 @@ const getTransactionById_controller = async (req: Request, res: Response) => {
   }
 };
 
+const getStats_controller = async (req: Request, res: Response) => {
+  try {
+    const userId = req.id;
+
+    const income = await prisma.account.groupBy({
+      by: ["userId"],
+      _sum: {
+        value: true,
+      },
+      where: {
+        userId: userId,
+        type: "FIXED",
+      },
+    });
+
+    const expense = await prisma.transaction.groupBy({
+      by: ["date"],
+      _avg: {
+        amount: true,
+      },
+      where: {
+        userId: userId,
+      },
+    });
+
+    const savings = await prisma.account.groupBy({
+      by: ["value"],
+      _sum: {
+        value: true,
+      },
+      where: {
+        userId: userId,
+        type: "BANK",
+      },
+    });
+
+    if (!income || !expense || !savings) {
+      return res
+        .status(HTTP_STATUS.NOT_FOUND)
+        .send({ message: "No transactions found" });
+    }
+
+    const stats = {
+      total_expense: income,
+      total_income: expense,
+      total_savings: savings,
+    };
+
+    return res.status(HTTP_STATUS.OK).send(stats);
+  } catch (error: any) {
+    console.error(
+      "Error creating user: @getStats/controller, META: ",
+      error.message
+    );
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send(error);
+  }
+};
+
 const addTransaction_controller = async (req: Request, res: Response) => {
   try {
     const userId = req.id;
@@ -153,6 +211,7 @@ const deleteTransaction_controller = async (req: Request, res: Response) => {
 export default {
   getTransactions_controller,
   getTransactionById_controller,
+  getStats_controller,
   addTransaction_controller,
   updateTransaction_controller,
   deleteTransaction_controller,

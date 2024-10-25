@@ -38,7 +38,7 @@ const updateUser_controller = async (req: Request, res: Response) => {
 
     const user = await prisma.user.findFirst({
       where: {
-        username: username,
+        id: user_id,
       },
     });
 

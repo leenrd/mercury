@@ -10,8 +10,10 @@ import validateAuthFn from "./middlewares/auth-validation";
 import cookieParser from "cookie-parser";
 import authRoute from "@routes/auth.route";
 import userRoute from "@routes/user.route";
+import accountRoutes from "@routes/accounts.route";
 import assetRoute from "@routes/assets.route";
 import transactionRoute from "@routes/transactions.route";
+import liabilityRoute from "@routes/liability.route";
 
 // CONFIG
 dotenv.config();
@@ -38,9 +40,10 @@ api.get("/", (_, res: Response) => {
 // ROUTES
 api.use("/auth", authRoute);
 api.use("/user", validateAuthFn, userRoute);
-api.use("/transactions", validateAuthFn, transactionRoute);
-// api.use("/assets", validateAuthFn, assetRoute);
-// api.use("/vault", validateAuthFn, assetRoute);
+api.use("/transaction", validateAuthFn, transactionRoute);
+api.use("/account", validateAuthFn, accountRoutes);
+api.use("/asset", validateAuthFn, assetRoute);
+api.use("/liability", validateAuthFn, liabilityRoute);
 
 // ERROR HANDLING
 api.all("*", () => {
