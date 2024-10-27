@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/(dashboard)/transactions/page": [
+    "/(dashboard)/market/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/transactions/page.js"
+      "static/chunks/app/(dashboard)/market/page.js"
     ],
     "/(dashboard)/layout": [
       "static/chunks/webpack.js",
@@ -16,30 +16,20 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(dashboard)/vault/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/vault/page.js"
-    ],
     "/(dashboard)/overview/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(dashboard)/overview/page.js"
     ],
-    "/(dashboard)/market/page": [
+    "/(dashboard)/vault/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/market/page.js"
+      "static/chunks/app/(dashboard)/vault/page.js"
     ],
-    "/(account)/settings/page": [
+    "/(dashboard)/transactions/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(account)/settings/page.js"
-    ],
-    "/(account)/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(account)/layout.js"
+      "static/chunks/app/(dashboard)/transactions/page.js"
     ]
   }
 }
