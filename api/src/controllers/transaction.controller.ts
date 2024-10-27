@@ -5,6 +5,8 @@ import { Request, Response } from "express";
 const getTransactions_controller = async (req: Request, res: Response) => {
   try {
     const userId = req.id;
+    const page = parseInt(req.query.page as string) || 1;
+    const pageSize = parseInt(req.query.pageSize as string) || 10;
 
     const transactions = await prisma.transaction.findMany({
       where: {
@@ -13,15 +15,31 @@ const getTransactions_controller = async (req: Request, res: Response) => {
       orderBy: {
         createdAt: "desc",
       },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
     });
 
-    if (!transactions) {
+    const transactionCount = await prisma.transaction.count({
+      where: {
+        userId: userId,
+      },
+    });
+
+    if (!transactions.length) {
       return res
         .status(HTTP_STATUS.NOT_FOUND)
         .send({ message: "No transactions found" });
     }
 
-    return res.status(HTTP_STATUS.OK).send(transactions);
+    return res.status(HTTP_STATUS.OK).send({
+      transactions: transactions,
+      pagination: {
+        page: page,
+        pageSize: pageSize,
+        total: transactionCount,
+        totalPages: Math.ceil(transactionCount / pageSize),
+      },
+    });
   } catch (error: any) {
     console.error(
       "Error creating user: @getTransactions/controller, META: ",
@@ -94,7 +112,7 @@ const getStats_controller = async (req: Request, res: Response) => {
       },
     });
 
-    if (!income || !expense || !savings) {
+    if (!income.length || !expense.length || !savings.length) {
       return res
         .status(HTTP_STATUS.NOT_FOUND)
         .send({ message: "No transactions found" });

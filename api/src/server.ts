@@ -13,6 +13,7 @@ import userRoute from "@routes/user.route";
 import accountRoutes from "@routes/accounts.route";
 import assetRoute from "@routes/assets.route";
 import transactionRoute from "@routes/transactions.route";
+import netRoutes from "@routes/net.route";
 import liabilityRoute from "@routes/liability.route";
 
 // CONFIG
@@ -40,8 +41,11 @@ api.get("/", (_, res: Response) => {
 // ROUTES
 api.use("/auth", authRoute);
 api.use("/user", validateAuthFn, userRoute);
+
 api.use("/transaction", validateAuthFn, transactionRoute);
 api.use("/account", validateAuthFn, accountRoutes);
+
+api.use("/net", validateAuthFn, netRoutes);
 api.use("/asset", validateAuthFn, assetRoute);
 api.use("/liability", validateAuthFn, liabilityRoute);
 
