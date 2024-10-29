@@ -7,6 +7,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useGetNetGraph } from "@/hooks/use-net";
 
 const chartData = [
   { month: "January", Value: 80 },
@@ -31,6 +32,19 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function NetWorthChart() {
+  const {
+    data: graph,
+    isError: errGraph,
+    isLoading: loadGraph,
+  } = useGetNetGraph();
+
+  if (errGraph) {
+    return <div>Failed to load</div>;
+  }
+
+  if (loadGraph) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <ChartContainer
@@ -39,7 +53,7 @@ export function NetWorthChart() {
       >
         <AreaChart
           accessibilityLayer
-          data={chartData}
+          data={graph || chartData}
           margin={{
             left: 12,
             right: 12,
@@ -69,7 +83,7 @@ export function NetWorthChart() {
             </linearGradient>
           </defs>
           <Area
-            dataKey="Value"
+            dataKey="value"
             type="natural"
             fill="url(#fillValue)"
             fillOpacity={0.4}

@@ -1,23 +1,36 @@
+"use client";
+
 import { CardDescription, CardTitle } from "@/components/ui/card";
+import { useGetStats } from "@/hooks/use-transactions";
 import React from "react";
 
 const Stats = () => {
+  const { data, isError, isLoading } = useGetStats();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error...</div>;
+  }
+
   const Attributes = [
     {
       label: "Income",
-      value: "₱22,000/m",
+      value: `₱${Math.floor(data.total_income._sum.value)}/m`,
     },
     {
       label: "Expenses",
-      value: "₱4,800/m avg.",
+      value: `₱${Math.floor(data.total_expense._avg.amount)}/m avg.`,
     },
     {
       label: "Target Expenses",
-      value: "₱2,500/m avg.",
+      value: "₱2500/m avg.",
     },
     {
       label: "Net Savings",
-      value: "₱50,000/m",
+      value: `₱${Math.floor(data.total_savings._sum.value)}/m`,
     },
   ];
 

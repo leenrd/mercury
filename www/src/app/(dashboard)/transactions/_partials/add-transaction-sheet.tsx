@@ -1,52 +1,91 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetDescription,
   SheetFooter,
-  SheetClose,
 } from "@/components/ui/sheet";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
+
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+
 import React from "react";
-import { cn } from "@/lib/utils";
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useToast } from "@/hooks/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useGetAccounts } from "@/hooks/use-accounts";
+import { useAddTransaction } from "@/hooks/use-transactions";
+import { Loader2 } from "lucide-react";
 
 const categories = [
-  { label: "Food", value: "en" },
-  { label: "Bills", value: "fr" },
-  { label: "Entertainment", value: "de" },
-  { label: "Work", value: "es" },
-  { label: "Investment", value: "pt" },
-  { label: "Utility", value: "ru" },
-  { label: "Clothing", value: "ja" },
-  { label: "Technology", value: "ko" },
+  { label: "Food", value: "Food" },
+  { label: "Bills", value: "Bills" },
+  { label: "Entertainment", value: "Entertainment" },
+  { label: "Work", value: "Work" },
+  { label: "Investment", value: "Investment" },
+  { label: "Utility", value: "Utility" },
+  { label: "Clothing", value: "Clothing" },
+  { label: "Technology", value: "Technology" },
 ] as const;
 
+const formSchema = z.object({
+  merchant: z.string().min(3).max(20),
+  amount: z.coerce.number(),
+  accountId: z.string(),
+  category: z.string(),
+});
+
 const AddTransactionSheet = () => {
+  const { toast } = useToast();
+  const { data: accounts } = useGetAccounts();
+  const { mutateAsync: createTransaction, isPending } = useAddTransaction();
+
+  type AccountT = {
+    id: string;
+    label: string;
+    type: string;
+    provider: string;
+    value: number;
+    userId: string;
+    createdAt: string;
+  };
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      createTransaction(values);
+      toast({
+        title: "Form submitted",
+        description: "Transaction added successfully.",
+      });
+    } catch (error) {
+      console.error("Form submission error", error);
+      toast({
+        title: "Form submission error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    }
+  }
   return (
     <SheetContent className="flex flex-col justify-between">
       <section>
@@ -57,71 +96,107 @@ const AddTransactionSheet = () => {
           </SheetDescription>
         </SheetHeader>
 
-        <br />
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8 max-w-3xl mx-auto py-10"
+          >
+            <FormField
+              control={form.control}
+              name="merchant"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Merchant</FormLabel>
+                  <FormControl>
+                    <Input placeholder="McDonalds" type="text" {...field} />
+                  </FormControl>
 
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Merchant
-            </Label>
-            <Input id="name" value="Leenard Zarate" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Amount
-            </Label>
-            <Input id="username" value="@leenard" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Account
-            </Label>
-            <Input id="username" value="@leenard" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Category
-            </Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  className={cn("justify-between rounded-md w-[246.5px]")}
-                >
-                  Select category
-                  <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-full p-0">
-                <Command>
-                  <CommandInput
-                    placeholder="Search category..."
-                    className="h-9"
-                  />
-                  <CommandList>
-                    <CommandEmpty>No category found.</CommandEmpty>
-                    <CommandGroup>
-                      {categories.map((c) => (
-                        <CommandItem value={c.label} key={c.value}>
-                          {c.label}
-                          <CheckIcon className={cn("ml-auto h-4 w-4")} />
-                        </CommandItem>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Amount</FormLabel>
+                  <FormControl>
+                    <Input placeholder="100" type="number" {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="accountId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Account</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select account" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {accounts?.map((acc: AccountT) => (
+                        <SelectItem value={acc.id} key={acc.id}>
+                          {acc.provider}
+                        </SelectItem>
                       ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-          </div>
-        </div>
-      </section>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-      <SheetFooter>
-        <SheetClose asChild>
-          <Button type="submit">Add transaction</Button>
-        </SheetClose>
-      </SheetFooter>
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories.map((categ) => (
+                        <SelectItem value={categ.value} key={categ.value}>
+                          {categ.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <SheetFooter>
+              {/* <SheetClose asChild> */}
+              <Button type="submit" disabled={isPending}>
+                {isPending ? <Loader2 className="animate-spin" /> : null}
+                Add transaction
+              </Button>
+              {/* </SheetClose> */}
+            </SheetFooter>
+          </form>
+        </Form>
+      </section>
     </SheetContent>
   );
 };

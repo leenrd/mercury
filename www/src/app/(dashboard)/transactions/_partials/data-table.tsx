@@ -20,7 +20,6 @@ import {
 
 import { useState } from "react";
 import SearchBar from "./search-bar";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";

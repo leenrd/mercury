@@ -1,10 +1,12 @@
+"use client";
+
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import React from "react";
 import Stats from "./_partials/stats";
 import { DataTable } from "./_partials/data-table";
 import { columns } from "./_partials/columns";
-import { Transactions } from "./_data/sample";
 import { TablePagination } from "@/components/partials/table-pagination";
+import { useGetTransactions } from "@/hooks/use-transactions";
 
 interface PostsProps {
   searchParams: { [key: string]: string | undefined };
@@ -13,6 +15,19 @@ interface PostsProps {
 const TransactionPage = ({ searchParams }: PostsProps) => {
   const currentPage = parseInt((searchParams.page as string) || "1");
   const postsPerPage = parseInt((searchParams.pageSize as string) || "5");
+
+  const { data, isError, isLoading, error } = useGetTransactions(
+    currentPage,
+    postsPerPage
+  );
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error..., {error.message}</div>;
+  }
 
   return (
     <article>
@@ -27,13 +42,12 @@ const TransactionPage = ({ searchParams }: PostsProps) => {
         <br />
 
         <CardContent>
-          <DataTable columns={columns} data={Transactions} />
+          <DataTable columns={columns} data={data.transactions} />
           <br />
           <TablePagination
             page={currentPage}
             pageSize={postsPerPage}
-            // temp total count
-            totalCount={10}
+            totalCount={data.pagination.total}
             pageSizeSelectOptions={{
               pageSizeOptions: [5, 10, 25, 50],
             }}

@@ -21,7 +21,7 @@ export const columns: ColumnDef<Transaction>[] = [
     header: "Category",
   },
   {
-    accessorKey: "account.name",
+    accessorKey: "account.label",
     header: "Account",
   },
   {

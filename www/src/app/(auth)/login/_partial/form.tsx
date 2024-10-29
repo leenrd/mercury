@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/use-auth";
 import { Loader } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -24,6 +25,7 @@ const formSchema = z.object({
 
 const LoginForm = () => {
   const { loginMutation } = useAuth();
+  const { toast } = useToast();
   const {
     mutateAsync: login,
     isPending: loginLoading,
@@ -41,7 +43,10 @@ const LoginForm = () => {
 
   function submitLogin(data: z.infer<typeof formSchema>) {
     login(data);
-    console.log(data);
+    toast({
+      title: "Logging in",
+      description: "Please wait while we redirect you in.",
+    });
   }
 
   return (

@@ -8,9 +8,12 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from "@/components/ui/select";
+} from "@/components/ui/select-no-border";
+import { useGetNetStat } from "@/hooks/use-net";
 
 const NetWorthStat = () => {
+  const { data: stat, isError: errStat, isLoading: loadStat } = useGetNetStat();
+
   const [targetNetSelection, setTargetNetSelection] = useState<string>("₱100K");
   const [yearBasedOnSelection, _] = useState<Record<string, number[]>>({
     // These numbers are static for now, this app is specially made for me anyways
@@ -22,6 +25,14 @@ const NetWorthStat = () => {
     "₱11.2B/$200M": [2058, 55],
   });
 
+  if (errStat) {
+    return <div>Failed to load</div>;
+  }
+
+  if (loadStat) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <CardHeader className="grid grid-cols-2 items-end gap-3">
       <div className="col-span-1">
@@ -29,10 +40,11 @@ const NetWorthStat = () => {
           Net Worth
         </CardDescription>
         <CardTitle>
-          <p className="text-3xl font-medium">₱ 80,000</p>
+          <p className="text-3xl font-medium">₱ {stat.net_worth}</p>
         </CardTitle>
         <div className="flex items-center gap-2 text-xs mt-1 leading-none text-green-600">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          Trending {stat.net_worth_trend.toLowerCase()} this month{" "}
+          <TrendingUp className="h-4 w-4" />
         </div>
       </div>
 
