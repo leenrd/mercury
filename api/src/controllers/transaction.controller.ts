@@ -6,9 +6,16 @@ const getTransactions_controller = async (req: Request, res: Response) => {
   try {
     const userId = req.id;
     const page = parseInt(req.query.page as string) || 1;
-    const pageSize = parseInt(req.query.pageSize as string) || 10;
+    const pageSize = parseInt(req.query.pageSize as string) || 5;
 
     const transactions = await prisma.transaction.findMany({
+      include: {
+        account: {
+          select: {
+            label: true,
+          },
+        },
+      },
       where: {
         userId: userId,
       },
@@ -80,8 +87,7 @@ const getStats_controller = async (req: Request, res: Response) => {
   try {
     const userId = req.id;
 
-    const income = await prisma.account.groupBy({
-      by: ["userId"],
+    const income = await prisma.account.aggregate({
       _sum: {
         value: true,
       },
@@ -91,8 +97,7 @@ const getStats_controller = async (req: Request, res: Response) => {
       },
     });
 
-    const expense = await prisma.transaction.groupBy({
-      by: ["date"],
+    const expense = await prisma.transaction.aggregate({
       _avg: {
         amount: true,
       },
@@ -101,8 +106,7 @@ const getStats_controller = async (req: Request, res: Response) => {
       },
     });
 
-    const savings = await prisma.account.groupBy({
-      by: ["value"],
+    const savings = await prisma.account.aggregate({
       _sum: {
         value: true,
       },
@@ -112,15 +116,15 @@ const getStats_controller = async (req: Request, res: Response) => {
       },
     });
 
-    if (!income.length || !expense.length || !savings.length) {
+    if (!income || !expense || !savings) {
       return res
         .status(HTTP_STATUS.NOT_FOUND)
         .send({ message: "No transactions found" });
     }
 
     const stats = {
-      total_expense: income,
-      total_income: expense,
+      total_income: income,
+      total_expense: expense,
       total_savings: savings,
     };
 
@@ -142,10 +146,10 @@ const addTransaction_controller = async (req: Request, res: Response) => {
     const transaction = await prisma.transaction.create({
       data: {
         userId: userId,
-        accountId: accountId,
-        amount: amount,
-        category: category,
         merchant: merchant,
+        amount: amount,
+        accountId: accountId,
+        category: category,
       },
     });
 

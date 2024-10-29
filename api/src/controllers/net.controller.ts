@@ -39,7 +39,12 @@ const getNetStat = async (req: Request, res: Response) => {
     const net_worth =
       (assetsSum._sum.value || 0) - (liabilitiesSum._sum.value || 0);
 
-    return res.status(HTTP_STATUS.OK).send(net_worth);
+    const net_worth_trend = net_worth > 0 ? "UP" : "DOWN";
+
+    return res.status(HTTP_STATUS.OK).send({
+      net_worth,
+      net_worth_trend,
+    });
   } catch (error: any) {
     console.error(
       "Error creating user: @getNetStat/controller, META: ",
@@ -62,6 +67,9 @@ const getNetGraph = async (req: Request, res: Response) => {
         userId,
         type: {
           not: "CREDIT",
+        },
+        createdAt: {
+          gte: new Date(new Date().getFullYear(), 0, 1),
         },
       },
     });
