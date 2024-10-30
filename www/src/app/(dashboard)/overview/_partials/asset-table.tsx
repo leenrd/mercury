@@ -16,8 +16,13 @@ import { useGetAssets } from "@/hooks/use-assets";
 const AssetTable = ({ className }: { className?: string }) => {
   const { data: assetsData, isError, isLoading } = useGetAssets();
 
-  // if (isLoading) return <div>Loading...</div>;
-  // if (isError) return <div>Error...</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error...</div>;
+
+  interface AssetT {
+    type: string;
+    value: number;
+  }
 
   return (
     <div className={cn("py-10", className)}>
@@ -25,18 +30,16 @@ const AssetTable = ({ className }: { className?: string }) => {
         <TableHeader>
           <TableRow>
             <TableHead className="w-[200px]">Asset Class</TableHead>
-            <TableHead>% of Asset</TableHead>
             <TableHead className="text-right">Value</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {chartData.map((data, i) => (
+          {assetsData.map((data: AssetT, i: number) => (
             <TableRow key={i}>
               <TableCell className="font-medium">
                 {data.type.toUpperCase()}
               </TableCell>
-              <TableCell>{data.quantity} ent</TableCell>
-              <TableCell className="text-right">P250.00</TableCell>
+              <TableCell className="text-right">₱ {data.value}</TableCell>
             </TableRow>
           ))}
         </TableBody>

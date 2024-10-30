@@ -4,10 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 export const useGetLiabilities = () => {
   return useQuery({
     queryKey: ["liabilities"],
-    queryFn: () => {
-      const response = api.get(`${process.env.baseUrl}/liabilities`);
+    queryFn: async () => {
+      const { data } = await api.get(`${process.env.baseUrl}/liability/all`);
 
-      return response;
+      return data;
     },
     refetchOnWindowFocus: false,
   });
@@ -17,9 +17,7 @@ export const useGetTotalLiabilitiesCount = () => {
   return useQuery({
     queryKey: ["lb_total"],
     queryFn: async () => {
-      const { data } = await api.get(
-        `${process.env.baseUrl}/liabilities/total`
-      );
+      const { data } = await api.get(`${process.env.baseUrl}/liability/total`);
       return data;
     },
     refetchOnWindowFocus: false,

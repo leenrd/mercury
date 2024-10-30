@@ -52,13 +52,19 @@ export default function LiabilityGraph({ className }: { className?: string }) {
     isLoading,
   } = useGetLiabilities();
 
-  // if (isLoading) return <div>Loading...</div>;
-  // if (dataError) return <div>Error...</div>;
-  // if (countError) return <div>Error...</div>;
+  interface Liability {
+    type: string;
+    value: number;
+  }
 
-  const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.quantity, 0);
-  }, []);
+  if (isLoading) return <div>Loading...</div>;
+  if (dataError) return <div>Error...</div>;
+  if (countError) return <div>Error...</div>;
+
+  const chartWithColors = liabilitiesData.map((item: Liability) => {
+    const randomColor = `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`;
+    return { ...item, fill: randomColor };
+  });
 
   return (
     <ChartContainer
@@ -71,8 +77,8 @@ export default function LiabilityGraph({ className }: { className?: string }) {
           content={<ChartTooltipContent hideLabel />}
         />
         <Pie
-          data={chartData}
-          dataKey="quantity"
+          data={chartWithColors}
+          dataKey="value"
           nameKey="type"
           innerRadius={120}
           strokeWidth={5}
@@ -92,7 +98,7 @@ export default function LiabilityGraph({ className }: { className?: string }) {
                       y={viewBox.cy}
                       className="fill-foreground text-3xl font-bold"
                     >
-                      ₱{totalVisitors.toLocaleString()}
+                      ₱{totalLiabilitiesCount._sum.value}
                     </tspan>
                     <tspan
                       x={viewBox.cx}

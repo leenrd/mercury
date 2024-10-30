@@ -10,7 +10,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { cn } from "@/lib/utils";
-import { chartData } from "../_data/data";
 import { useGetAssets, useGetTotalAssetCount } from "@/hooks/use-assets";
 
 const chartConfig = {
@@ -41,16 +40,21 @@ const chartConfig = {
 
 export default function AssetGraph({ className }: { className?: string }) {
   const { data: assetCount, isError: countError } = useGetTotalAssetCount();
-
   const { data: assetData, isError: dataError, isLoading } = useGetAssets();
 
-  // if (isLoading) return <div>Loading...</div>;
-  // if (dataError) return <div>Error...</div>;
-  // if (countError) return <div>Error...</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (dataError) return <div>Error...</div>;
+  if (countError) return <div>Error...</div>;
 
-  const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.quantity, 0);
-  }, []);
+  interface Asset {
+    type: string;
+    value: number;
+  }
+
+  const chartWithColors = assetData.map((item: Asset) => {
+    const randomColor = `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`;
+    return { ...item, fill: randomColor };
+  });
 
   return (
     <ChartContainer
@@ -63,8 +67,8 @@ export default function AssetGraph({ className }: { className?: string }) {
           content={<ChartTooltipContent hideLabel />}
         />
         <Pie
-          data={chartData}
-          dataKey="quantity"
+          data={chartWithColors}
+          dataKey="value"
           nameKey="type"
           innerRadius={120}
           strokeWidth={5}
@@ -84,7 +88,7 @@ export default function AssetGraph({ className }: { className?: string }) {
                       y={viewBox.cy}
                       className="fill-foreground text-3xl font-bold"
                     >
-                      ₱{totalVisitors.toLocaleString()}
+                      ₱{assetCount._sum.value}
                     </tspan>
                     <tspan
                       x={viewBox.cx}
