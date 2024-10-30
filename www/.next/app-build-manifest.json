@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/(dashboard)/overview/page": [
+    "/(dashboard)/vault/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/overview/page.js"
+      "static/chunks/app/(dashboard)/vault/page.js"
     ],
     "/(dashboard)/layout": [
       "static/chunks/webpack.js",
@@ -26,15 +26,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(auth)/layout.js"
     ],
-    "/(dashboard)/vault/page": [
+    "/(dashboard)/overview/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/vault/page.js"
+      "static/chunks/app/(dashboard)/overview/page.js"
     ],
-    "/(dashboard)/transactions/page": [
+    "/(dashboard)/market/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/transactions/page.js"
+      "static/chunks/app/(dashboard)/market/page.js"
     ]
   }
 }

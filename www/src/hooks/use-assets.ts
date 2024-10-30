@@ -22,3 +22,14 @@ export const useGetTotalAssetCount = () => {
     refetchOnWindowFocus: false,
   });
 };
+
+export const useGetVault = () => {
+  return useQuery({
+    queryKey: ["vault"],
+    queryFn: async () => {
+      const { data } = await api.get(`${process.env.baseUrl}/asset/vault`);
+      return data;
+    },
+    refetchOnWindowFocus: false,
+  });
+};
